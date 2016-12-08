@@ -1,0 +1,20 @@
+{volist name="reples" id="vo"}
+<article class="am-comment"> <!-- 评论容器 -->
+    <a href="{vo.openid|reurl='home'}" target="_blank" rel="nofollow">
+        <img class="am-comment-avatar" src="{$vo.avatar}" alt=""/> <!-- 评论者头像 -->
+    </a>
+
+    <div class="am-comment-main"> <!-- 评论内容容器 -->
+        <header class="am-comment-hd">
+            <!--<h3 class="am-comment-title">评论标题</h3>-->
+            <div class="am-comment-meta"> <!-- 评论元数据 -->
+                <a href="{vo.openid|reurl='home'}" rel="nofollow" target="_blank" class="am-comment-author">{$vo.username}</a>
+                <!-- 评论者 -->
+                评论于
+                <time datetime="">{$vo.dateline|get_friendly_time}</time>
+            </div>
+        </header>
+        <div class="am-comment-bd">{$vo.message|htmlspecialchars_decode}</div> <!-- 评论内容 -->
+    </div>
+</article>
+{/volist}

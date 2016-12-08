@@ -1,0 +1,54 @@
+{extend name="common/index"/}
+{block name="content"}
+<div class="am-container am-margin-top">
+    <div class="am-g">
+        <div class="am-u-sm-3">
+            <section class="am-panel am-radius">
+                <div class="am-panel-bd am-cf am-padding-sm">
+                    <div class="am-widget-user-avatar am-fl am-margin-right">
+                        <img src="{$user.avatar}">
+                    </div>
+                    <div class="am-widget-user-username">
+                        <strong class="am-text-xl">{$user.username}</strong>
+                        <div class="am-text-xs">
+                            <span class="am-icon-clock-o"></span>
+                            注册时间：{$user.reg_time|date="Y-m-d",###}
+                        </div>
+                        <div class="am-text-xs">
+                            <span class="am-icon-clock-o"></span>
+                            最后登录：{$user.last_login_time|date="Y-m-d",###}
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="am-panel am-radius am-text-sm">
+                <header class="am-panel-hd am-border-bottom">
+                    <h3 class="am-panel-title am-text-normal am-text-default"><span class="am-icon-bars"></span> 用户中心导航</h3>
+                </header>
+                <ul class="am-nav am-margin-top-0">
+                    <li class="am-active"><a href="#" class="am-radius am-icon-home"> 首页</a></li>
+                    <li><a href="#" class="am-icon-commenting-o am-radius"> 我的回复</a></li>
+                    <li><a href="#" class="am-icon-flag am-radius"> 我的关注</a></li>
+                    <li><a href="#" class="am-icon-users am-radius"> 我的粉丝</a></li>
+                    <li><a href="#" class="am-icon-cog am-radius"> 个人设置</a></li>
+                </ul>
+            </section>
+
+        </div>
+        <div class="am-u-sm-9 am-padding-left-0">
+            <section class="am-panel am-radius">
+                <div class="am-panel-bd"><span class="am-icon-bars"></span> 主题列表</div>
+                <ul class="am-list am-text-sm">
+                    {volist name="list" id="vo"}
+                    <li class="am-border-bottom">
+                        <a href="{$vo.openid|reurl='topic'}" target="_blank" class="am-icon-commenting-o"> {$vo.subject}
+                            <span class="am-badge am-fr am-text-normal am-radius">{$vo.dateline|get_friendly_time}</span>
+                        </a>
+                    </li>
+                    {/volist}
+                </ul>
+            </section>
+        </div>
+    </div>
+</div>
+{/block}

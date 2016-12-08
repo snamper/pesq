@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>{block name="title"}{/block}{$config.sitename}</title>
+    <link rel="stylesheet" href="__c__/weui.min.css{:vcs()}">
+    <link rel="stylesheet" href="__c__/weui.theme.min.css{:vcs()}">
+</head>
+<body>
+{block name="content"}{/block}
+<script src="__j__/jquery.min.js{:vcs()}"></script>
+<script src="__j__/mobile.min.js{:vcs()}"></script>
+<script>var spm = '{:spm()}', vcs = '{:vcs()}';</script>
+</body>
+</html>

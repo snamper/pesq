@@ -1,0 +1,64 @@
+{extend name="common/index"}
+{block name="title"}购物车 - {/block}
+{block name="css"}
+
+{/block}
+{block name="content"}
+    <div class="weui-shopcart-topbar">
+        <div class="weui-cells weui-margin-0">
+            <div class="weui-right" onclick="showCartEdiorTool()">编辑</div>
+            <img src="__i__/mshop/cart.svg" alt="" width="28"> 购物车
+        </div>
+    </div>
+    <div class="weui-cells weui-cells_checkbox">
+        <label class="weui-cell weui-check__label" for="s11">
+            <div class="weui-cell__hd">
+                <input type="checkbox" class="weui-check" name="checkbox1" id="s11" checked="checked">
+                <i class="weui-icon-checked"></i>
+            </div>
+            <div class="weui-cell__bd">
+                <p>standard is dealt for u.</p>
+            </div>
+        </label>
+        <label class="weui-cell weui-check__label" for="s12">
+            <div class="weui-cell__hd">
+                <input type="checkbox" name="checkbox1" class="weui-check" id="s12">
+                <i class="weui-icon-checked"></i>
+            </div>
+            <div class="weui-cell__bd">
+                <p>standard is dealicient for u.</p>
+            </div>
+        </label>
+    </div>
+    <div class="weui-shopcart-bar weui-cells">
+        <div class="weui-flex">
+            <div class="weui-flex__item"></div>
+            <div class="weui-flex__item"></div>
+            <div class="weui-flex__item">
+                <div class="weui-btn weui-btn_warn weui-radius-0">删除</div>
+            </div>
+        </div>
+    </div>
+{/block}
+{block name="footer"}
+<div class="weui-buy-bar weui-cells">
+    <div class="weui-flex">
+        <div class="weui-flex__item weui-buy-bar_home">
+
+        </div>
+        <div class="weui-flex__item">
+
+        </div>
+        <div class="weui-flex__item">
+            <div class="weui-btn weui-btn_primary">立即结算</div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="js"}
+<script type="text/javascript">
+    function showCartEdiorTool(){
+        $('.weui-shopcart-bar').toggle();
+    }
+</script>
+{/block}

@@ -1,0 +1,72 @@
+{extend name="common/index"/}
+{block name="title"}用户中心{/block}
+{block name="content"}
+<div class="weui-bg-primary">
+    {empty name="user"}
+    <div class="weui-flex">
+        <div class="weui-flex__item">
+            <img src="__i__/mshop/avatar.svg" class="weui-round" width="60" alt="">
+        </div>
+        <div class="weui-flex__item weui-padding-top">
+            <a href="{:url('wechat_auth')}" class="weui-btn weui-btn_mini weui-btn_default weui-radius-0 weui-margin-top"> 微信登陆授权</a>
+        </div>
+        <div class="weui-flex__item"></div>
+    </div>
+    {else/}
+    <div class="weui-flex">
+        <div class="weui-flex__item">
+            <img src="{$user.headimgurl}" class="weui-round" width="60" alt="">
+        </div>
+        <div class="weui-flex__item weui-padding-top weui-text-white weui-text-xl">
+           {$user.nickname}
+        </div>
+        <div class="weui-flex__item"></div>
+    </div>
+    {/empty}
+</div>
+<div class="weui-cells weui-margin-0 weui-padding">
+    <div class="weui-flex weui-text-center">
+        <div class="weui-flex__item">
+            <a href="{:url('order')}?status=1">
+            <img src="__i__/mshop/state_1.svg" width="32" alt="">
+            <p class="weui-text-xs weui-text-gray">待付款</p>
+            </a>
+        </div>
+        <div class="weui-flex__item">
+            <a href="{:url('order')}?status=2">
+            <img src="__i__/mshop/state_2.svg" width="32" alt="">
+            <p class="weui-text-xs weui-text-gray">代发货</p>
+            </a>
+        </div>
+        <div class="weui-flex__item">
+            <a href="{:url('order')}?status=3">
+            <img src="__i__/mshop/state_3.svg" width="32" alt="">
+            <p class="weui-text-xs weui-text-gray">配送中</p>
+            </a>
+        </div>
+        <div class="weui-flex__item">
+            <a href="{:url('order')}?status=4">
+            <img src="__i__/mshop/state_4.svg" width="32" alt="">
+            <p class="weui-text-xs weui-text-gray">已完成</p>
+            </a>
+        </div>
+    </div>
+</div>
+<div class="weui-cells">
+    <a class="weui-cell weui-cell_access" href="{:url('order')}">
+        <div class="weui-cell__hd"><img src="__i__/mshop/order.svg" alt="" style="width:20px;margin-right:5px;display:block"></div>
+        <div class="weui-cell__bd"><p>全部订单</p></div>
+        <div class="weui-cell__ft">查看订单</div>
+    </a>
+    <a class="weui-cell weui-cell_access" href="{:url('myticket')}">
+        <div class="weui-cell__hd"><img src="__i__/mshop/water_card.svg" alt="" style="width:20px;margin-right:5px;display:block"></div>
+        <div class="weui-cell__bd"><p>我的水票</p></div>
+        <div class="weui-cell__ft">水票信息</div>
+    </a>
+    <a class="weui-cell weui-cell_access" href="{:url('address')}">
+        <div class="weui-cell__hd"><img src="__i__/mshop/local.svg" alt="" style="width:20px;margin-right:5px;display:block"></div>
+        <div class="weui-cell__bd"><p>收货地址</p></div>
+        <div class="weui-cell__ft">设置收货地址</div>
+    </a>
+</div>
+{/block}

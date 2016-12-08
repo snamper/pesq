@@ -1,0 +1,38 @@
+{extend name="common/index"/}
+{block name="css"}{:editorCSS()}{/block}
+{block name="content"}
+<section class="am-panel am-radius">
+    <div class="am-panel-bd">
+        <form action="/api_posts_article?spm={:spm()}" method="POST" role="form" class="am-form am-text-sm" id="posts">
+            <input type="hidden" name="__token__" value="{$Request.token}"/>
+            <legend>帖子发布</legend>
+            <div class="am-form-group am-g">
+                <div class="am-u-sm-2 am-padding-right-0">
+                    <select name="catid" class="am-input-sm" required>
+                        {volist name="channel" id="vo"}
+                        {eq name="vo.document" value="article"}
+                        <option value="{$vo.id}">{eq name="vo.level" value="2"}&nbsp;&nbsp;|--{/eq} {$vo.title}</option>
+                        {/eq}
+                        {/volist}
+                    </select>
+
+                </div>
+                <div class="am-u-sm-10">
+                    <input type="text" id="subject" class="am-input-sm" name="subject" placeholder="输入帖子标题" required>
+                </div>
+            </div>
+            <div class="am-form-group">
+                <label for="message">帖子内容</label>
+                {:editorTextarea('message',600)}
+            </div>
+
+            <button type="button" data-ajax-submit="#posts" class="am-btn am-btn-primary am-btn-sm am-radius am-icon-check">
+                立即发布
+            </button>
+        </form>
+    </div>
+</section>
+{/block}
+{block name="js"}
+{:editorJS()}
+{/block}

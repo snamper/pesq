@@ -1,0 +1,66 @@
+{extend name="common/index"}
+{block name="title"}商城首页 - {/block}
+{block name="css"}
+<link rel="stylesheet" href="__c__/amazeui.swiper.min.css{:vcs()}">
+{/block}
+{block name="content"}
+<!-- Slider main container -->
+<div class="swiper-container" id="index-slider">
+    <!-- Additional required wrapper -->
+    <div class="swiper-wrapper">
+        <!-- Slides -->
+        {volist name="slider" id="vo"}
+            <div class="swiper-slide">
+                <a href="{$vo.url}"><img src="{$vo.thumb}" alt="{$vo.title}" width="100%"></a>
+            </div>
+        {/volist}
+    </div>
+</div>
+<div class="weui-avg-flex weui-cells">
+    <div class="weui-flex weui-text-center">
+        {volist name="category" id="vo"}
+        <div class="weui-flex__item">
+            <a href="{$vo.url}">
+            <img src="{$vo.thumb}" alt="" width="48">
+            <p>{$vo.title}</p>
+            </a>
+        </div>
+        {/volist}
+    </div>
+</div>
+
+<!--end flex then start goodslist-->
+<div class="weui-panel weui-panel_access">
+    <div class="weui-panel__hd">商品列表</div>
+    <div class="weui-panel__bd">
+        {volist name="list" id="vo"}
+        <a href="{:url('goods')}?openid={$vo.openid}" class="weui-media-box weui-media-box_appmsg">
+            <div class="weui-media-box__hd">
+                <img class="weui-media-box__thumb" src="{$vo.thumb|exploThumbFirst}" alt="{$vo.subject}">
+            </div>
+            <div class="weui-media-box__bd">
+                <h4 class="weui-media-box__title">{$vo.subject}</h4>
+                <p class="weui-media-box__desc"><span class="weui-text-red weui-text-lg">￥{$vo.price}</span></p>
+                <div class="weui-icon__incart"></div>
+            </div>
+        </a>
+        {/volist}
+    </div>
+    <div class="weui-panel__ft">
+        <a href="javascript:void(0);" class="weui-cell weui-cell_access weui-cell_link">
+            <div class="weui-cell__bd">查看更多</div>
+            <span class="weui-cell__ft"></span>
+        </a>
+    </div>
+</div>
+
+<!--//end goods list-->
+{/block}
+{block name="js"}
+<script src="__j__/amazeui.swiper.min.js{:vcs()}"></script>
+<script type="text/javascript">
+    $(function(){
+        $('#index-slider').swiper();
+    });
+</script>
+{/block}

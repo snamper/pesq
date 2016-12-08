@@ -1,0 +1,19 @@
+{extend name="common/index"/}
+{block name="title"}{$article.subject} - {$channel.title} - {/block}
+{block name="content"}
+<article class="weui-article">
+    <h1>{$article.subject}</h1>
+    <p>{$author.username} 发布于 {$article.dateline|get_friendly_time}</p>
+    <section>
+       {$article.message|htmlspecialchars_decode}
+    </section>
+    <div class="weui-cf">
+        <span class="weui-right" onclick="callModelComment()">我要评论</span>
+        浏览({$article.views}) 回复({$article.reply})
+    </div>
+    <div class="weui-reples weui-border-top weui-padding-top weui-margin-top">
+        暂无评论
+    </div>
+</article>
+
+{/block}

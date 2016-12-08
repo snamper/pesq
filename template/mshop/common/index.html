@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>{block name="title"}{/block}{$config.sitename}</title>
+    <!-- 引入 WeUI -->
+    <link rel="stylesheet" href="__c__/weui.min.css{:vcs()}"/>
+    <link rel="stylesheet" href="__c__/weui.theme.min.css{:vcs()}"/>
+    {block name="css"}{/block}
+</head>
+<body id="mshop">
+{block name="content"}{/block}
+{block name="footer"}
+<div class="weui-footer">
+    <div class="weui-tabbar">
+        <a href="/mshop.html" class="weui-tabbar__item {eq name="controller" value="index"}{neq name="action" value="shopcart"}weui-bar__item_on{/neq}{/eq}">
+            <img src="__i__/mshop/home.svg" alt="" class="weui-tabbar__icon">
+            <p class="weui-tabbar__label">主页</p>
+        </a>
+        <a href="{:url('index/shopcart')}" class="weui-tabbar__item {eq name="controller" value="index"}{eq name="action" value="shopcart"}weui-bar__item_on{/eq}{/eq}">
+            <img src="__i__/mshop/cart.svg" alt="" class="weui-tabbar__icon">
+            <p class="weui-tabbar__label">购物车</p>
+        </a>
+        <a href="{:url('user/index')}" class="weui-tabbar__item {eq name="controller" value="user"}weui-bar__item_on{/eq}">
+            <img src="__i__/mshop/user.svg" alt="" class="weui-tabbar__icon">
+            <p class="weui-tabbar__label">我</p>
+        </a>
+    </div>
+</div>
+{/block}
+<div class="weui-toast" id="success-toast">
+    <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+    <p class="weui-toast__content">已完成</p>
+</div>
+<div class="weui-toast" id="error-toast">
+    <p class="weui-toast__content">已完成</p>
+</div>
+<script src="__j__/jquery.min.js{:vcs()}"></script>
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js?v={:time()}"></script>
+<script src="__j__/weui.widget.min.js{:vcs()}"></script>
+<script> var spm= "{:spm()}",vcs = "{:vcs()}"</script>
+<script>
+    wx.config({
+        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+        appId: '{$signStr.appId}', // 必填，公众号的唯一标识
+        timestamp: '{$signStr.timestamp}', // 必填，生成签名的时间戳
+        nonceStr: '{$signStr.nonceStr}', // 必填，生成签名的随机串
+        signature: '{$signStr.signature}',// 必填，签名，见附录1
+        jsApiList: ['scanQRCode','getLocation','openLocation'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+    });
+</script>
+{block name="js"}{/block}
+</body>
+</html>

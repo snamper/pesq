@@ -1,0 +1,178 @@
+<!doctype html>
+<html class="no-js" lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>{block name="title"}{/block}{$config.sitename} - powered by duothink!</title>
+    {block name="seo"}{/block}
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <meta http-equiv="Cache-Version" content="{:vcs(1)}"/>
+    <meta http-equiv="Spm" content="{:spm()}"/>
+    <link rel="icon" type="image/png" href="__i__/favicon.png{:vcs()}">
+    <link rel="stylesheet" href="__c__/amazeui.min.css{:vcs()}">
+    <link rel="stylesheet" href="__c__/app.css{:vcs()}">
+    <link rel="stylesheet" href="__c__/amazeui.theme.css{:vcs()}">
+    {block name="css"}{/block}
+</head>
+<body>
+<header class="am-topbar">
+    <div class="am-container">
+        <h1 class="am-brand"><a href="/"><img src="__i__/home_logo.png" alt="" height="40"></a></h1>
+        <ul class="am-nav am-nav-pills am-spm am-margin-top-0 am-fl">
+            {volist name="navigation" id="vo"}
+            <li><a href="{$vo.value}">{$vo.title}</a></li>
+            {/volist}
+        </ul>
+        <div class="am-topbar-right am-text-sm">
+            <ul class="am-nav am-nav-pills">
+                <li class="am-widget-search">
+                    <form action="/search.html" method="get" role="form">
+                        <input type="text" name="q" class="am-topbar-search" placeholder="搜索">
+                        <input type="hidden" name="spm" value="{:spm()}">
+                        <button class="am-icon-search" type="submit"></button>
+                    </form>
+                </li>
+                {empty name="userinfo"}
+                <li><a href="javascript:void(0);" class="am-icon-user am-btn" onclick="showModel('user-login-modal',350)"> 登录</a></li>
+                <li><a href="/api_user_register?spm={:spm()}" target="_blank" rel="nofollow" class="am-icon-user-plus am-btn">
+                    注册</a>
+                </li>
+                {else/}
+                <li class="am-dropdown" data-am-dropdown>
+                    <a href="javascript:;" rel="nofollow" class="am-icon-plus am-dropdown-toggle"
+                       data-am-dropdown-toggle> 发布内容</a>
+                    <ul class="am-dropdown-content">
+                        <li><a href="/api_user_posts?type=topic&spm={:spm()}" rel="nofollow"> 发布话题</a></li>
+                        <li><a href="/api_user_posts?type=house&spm={:spm()}" rel="nofollow"> 发布住房</a></li>
+                        <li><a href="/api_user_posts?type=jobs&spm={:spm()}" rel="nofollow"> 发布招聘</a></li>
+                    </ul>
+                </li>
+                <li><a href="{$userinfo.openid|reurl='home'}" target="_blank" rel="nofollow">
+                    <img src="{$userinfo.avatar.avatar}" alt="{$userinfo.username}" class="am-round" width="30">
+                    {$userinfo.username}
+                </a></li>
+                {/empty}
+            </ul>
+        </div>
+    </div>
+</header>
+<div class="am-container">
+    {block name="content"}{/block}
+</div>
+{block name="modal"}{/block}
+{empty name="userinfo"}
+<div class="am-modal am-modal-no-btn" tabindex="-1" id="user-login-modal">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">用户登录
+            <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+        </div>
+        <div class="am-modal-bd">
+            <form action="/user_api_user_account?spm={:spm()}" role="form" class="am-form" id="user-login">
+                <div class="am-form-group">
+                    <label for="username">登录名/手机</label>
+                    <input type="text" name="username" id="username" placeholder="输入你的用户名或是手机" required>
+                </div>
+                <div class="am-form-group">
+                    <label for="password">密码</label>
+                    <input type="password" name="password" id="password" placeholder="输入你的登录密码" required>
+                </div>
+                <div class="am-form-group">
+                    <div id="drag"></div>
+                </div>
+                <div class="am-form-group">
+                    <ul class="am-avg-sm-2">
+                        <li>
+                            <div class="am-btn am-btn-primary am-radius am-icon-check am-btn-block"
+                                 data-ajax-submit="#user-login" data-verify-type="drag"> 登录
+                            </div>
+                        </li>
+                        <li class="am-text-sm am-padding-left am-padding-top-xs">
+                            <a href="javascript:;">还没有账号？注册</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="am-cf">
+                    <div class="am-text-xs am-text-note am-text-center">其他登录方式</div>
+                    <div class="am-text-center am-padding-top-xs am-padding-bttom-xs">
+                        <a href="" class="am-icon-btn am-icon-qq am-primary"></a>
+                        <a href="" class="am-icon-btn am-icon-weixin am-success"></a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{/empty}
+
+<div class="am-footer">
+    <div class="am-container">
+        <ul class="am-avg-sm-4 am-text-sm am-text-left">
+            <li>
+                <dl>
+                    <dt><span class="am-icon-info-circle"> 关于我们</span></dt>
+                    <dd><a href="">关于我们</a></dd>
+                    <dd><a href="">业务合作</a></dd>
+                    <dd><a href="">联系方式</a></dd>
+                </dl>
+            </li>
+            <li>
+                <dl>
+                    <dt><span class="am-icon-link"></span> 友情链接</dt>
+                    <dd><a href="">友情链接111</a></dd>
+                </dl>
+            </li>
+            <li>
+                <dl>
+                    <dt><span class="am-icon-th"></span> 涉及业务</dt>
+                    <dd><a href="">友情链接111</a></dd>
+                </dl>
+            </li>
+            <li>
+                <dl>
+                    <dt><span class="am-icon-user"></span> 关注我们</dt>
+                    <dd>微信</dd>
+                    <dd>微博</dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+    <div class="am-footer-copy am-text-note">
+        &copy;2016 <a href="http://www.pe666.net">www.pe666.net</a> -
+        ICP备案号：<a href="http://www.miitbeian.gov.cn/" target="_blank" rel="nofollow">滇ICP备13003597号-12 </a> -
+        公安网备：<a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=53080202000233" rel="nofollow"><img src="__i__/wjtb.png" style="vertical-align: top"/>滇公网安备 53080202000233号</a>
+        <div>
+            <a href="http://www.yn.cyberpolice.cn/" target="_blank" rel="nofollow"><img src="__i__/g1.jpg" width="40" alt=""></a>
+            <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=53080202000233" target="_blank" rel="nofollow"><img src="__i__/BA.jpg" width="40" alt=""></a>
+            <a href="http://www.yn.cyberpolice.cn/" target="_blank" rel="nofollow"><img src="__i__/g2.jpg" width="40" alt=""></a>
+        </div>
+    </div>
+</div>
+<div class="alert-group">
+    <div class="am-alert am-alert-success" data-am-alert="">
+        <button type="button" class="am-close">&times;</button>
+        <p></p>
+    </div>
+    <div class="am-alert am-alert-danger" data-am-alert="">
+        <button type="button" class="am-close">&times;</button>
+        <p></p>
+    </div>
+    <div class="am-alert am-alert-warning" data-am-alert="">
+        <button type="button" class="am-close">&times;</button>
+        <p></p>
+    </div>
+</div>
+<div class="am-scroll-top" data-am-smooth-scroll>
+    <span class="am-icon-btn am-icon-arrow-up"></span>
+</div>
+<script src="__j__/jquery.min.js{:vcs()}"></script>
+<script src="__j__/amazeui.min.js{:vcs()}"></script>
+<script>var spm='{:spm()}',vcs='{:vcs()}';</script>
+<script src="__j__/common.min.js{:vcs()}"></script>
+{empty name="userinfo"}
+<script type="text/javascript">$('#drag').drag();</script>
+{/empty}
+<script src="__j__/app.min.js{:vcs()}"></script>
+{block name="js"}{/block}
+</body>
+</html>

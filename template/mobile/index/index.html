@@ -1,0 +1,27 @@
+{extend name="common/index"/}
+{block name="content"}
+<div class="weui-panel weui-panel_access">
+    <div class="weui-panel__hd">最新文章列表</div>
+    <div class="weui-panel__bd">
+        {volist name="list" id="vo"}
+        {empty name="vo.thumb"}
+        <div class="weui-media-box weui-media-box_text">
+            <a href="{$vo.openid|reurl='appmsg'}">
+            <h4 class="weui-media-box__title">{$vo.subject}</h4>
+            <p class="weui-media-box__desc">{$vo.description}</p>
+            </a>
+        </div>
+        {else/}
+            <div href="{$vo.openid|reurl='appmsg'}" class="weui-media-box weui-media-box_appmsg">
+                <div class="weui-media-box__hd">
+                    <img class="weui-media-box__thumb" src="{$vo.thumb|default_weixin_thumb}"></div>
+                <div class="weui-media-box__bd">
+                    <h4 class="weui-media-box__title">{$vo.subject}</h4>
+                    <p class="weui-media-box__desc">{$vo.description}</p>
+                </div>
+            </div>
+        {/empty}
+        {/volist}
+    </div>
+</div>
+{/block}

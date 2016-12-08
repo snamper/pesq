@@ -1,0 +1,56 @@
+{extend name="common/index"/}
+{block name="content"}
+<div class="am-ad-banner am-margin-bottom">
+    <a href="javascript:;"><img src="__i__/demo_slider/ad_top_banner.jpg" alt=""></a>
+</div>
+<div class="am-g">
+    <div class="am-u-sm-4">
+        <div data-am-widget="slider" class="am-slider am-slider-c1" data-am-slider=''>
+            <ul class="am-slides">
+                <li>
+                    <img src="__i__/demo_slider/s_1.jpg" height="360">
+                    <div class="am-slider-desc">远方 有一个地方 那里种有我们的梦想</div>
+                </li>
+                <li>
+                    <img src="__i__/demo_slider/s_2.jpg" height="360">
+                    <div class="am-slider-desc">某天 也许会相遇 相遇在这个好地方</div>
+                </li>
+                <li>
+                    <img src="__i__/demo_slider/s_3.jpg" height="360">
+                    <div class="am-slider-desc">某天 也许会相遇 相遇在这个好地方</div>
+                </li>
+                <li>
+                    <img src="__i__/demo_slider/s_4.jpg" height="360">
+                    <div class="am-slider-desc">某天 也许会相遇 相遇在这个好地方</div>
+                </li>
+                <li>
+                    <img src="__i__/demo_slider/s_5.jpg" height="360">
+                    <div class="am-slider-desc">某天 也许会相遇 相遇在这个好地方</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--//end slider-->
+    <div class="am-u-sm-5 am-padding-left-0">
+        <div class="am-index-news-title"><h2>今日热门</h2></div>
+        <dl class="am-index-remend">
+            {volist name="article_remend" id="vo"}
+                <dt><a href="{$vo.openid|reurl='topic'}">{$vo.subject}</a></dt>
+                <dd>{$vo.description}</dd>
+            {/volist}
+        </dl>
+        <ul class="am-list-news">
+            {volist name="article_list" id="vo"}
+            <li>
+                <a href="{}" class="am-btn am-btn-success am-btn-xs am-radius">话题</a>
+                <a href="{$vo.openid|reurl='topic'}">{$vo.subject}</a>
+            </li>
+            {/volist}
+        </ul>
+    </div>
+    <div class="am-u-sm-3">
+        <img src="__i__/demo_slider/ad_right_1.jpg">
+    </div>
+    <!--//end gallery-->
+</div>
+{/block}

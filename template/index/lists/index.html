@@ -1,0 +1,96 @@
+{extend name="common/index"/}
+{block name="title"}{$channel.title} - {/block}
+{block name="seo"}
+<meta name="keywords" content="{$channel.keywords}">
+<meta name="description" content="{$channel.description}">
+{/block}
+{block name="content"}
+<ol class="am-breadcrumb am-breadcrumb-slash">
+    <li><a href="/" class="am-icon-home"> 首页</a></li>
+    {volist name="breadcrumb" id="vo"}
+    {eq name="vo.id" value="$channel.id"}
+    <li>{$vo.title}</li>
+    {else/}
+    <li><a href="{$vo.openid|reurl='category'}">{$vo.title}</a></li>
+    {/eq}
+    {/volist}
+</ol>
+
+<div class="am-g">
+    <div class="am-u-sm-9">
+        <div class="am-channel-bar">
+            <h1>{$channel.title}</h1>
+            <ul class="am-nav am-nav-pills am-fr">
+                <li {empty name="order" }class="am-active" {/empty}>
+                <a href="{$channel.openid|reurl='category'}">最新发布</a>
+                </li>
+                <li {eq name="order" value="last_reply" }class="am-active" {/eq}>
+                <a href="{$channel.openid|reurl='category'}?order=last_reply">最新回复</a>
+                </li>
+                <li {eq name="order" value="selection" }class="am-active" {/eq}>
+                <a href="{$channel.openid|reurl='category'}?order=selection">精选话题</a>
+                </li>
+                <li {eq name="order" value="hot" }class="am-active" {/eq}>
+                <a href="{$channel.openid|reurl='category'}?order=hot">热门话题</a>
+                </li>
+            </ul>
+        </div>
+        <div class="am-widget-list-news am-margin-top">
+            {volist name="list" id="vo"}
+            {empty name="vo.thumb"}
+            <div class="am-cf am-widget-list-item">
+                <div class="am-cf am-list-title"><h3><a href="{$vo.openid|reurl='topic'}">{$vo.subject}</a></h3></div>
+                <div class="am-list-desc">
+                    {$vo.description}
+                    <div class="am-tags-group am-text-sm">
+                        <div class="am-info-bar">
+                            <a href="{$vo.uopenid|reurl='home'}" rel="nofollow">
+                                <img src="{$vo.avatar}" width="24" class="am-round" alt="">
+                                {$vo.username}</a>
+                            <span class="am-icon-clock-o"> {$vo.dateline|get_friendly_time}</span>
+                            <span class="am-icon-eye am-fr"> 浏览({$vo.views})</span>
+                            <span class="am-icon-commenting-o am-fr"> 回复({$vo.reply})</span>
+                        </div>
+                        {$vo.keywords|tags}
+                    </div>
+                </div>
+            </div>
+            {else/}
+            <div class="am-cf am-widget-list-item">
+                <div class="am-cf am-list-title"><h3><a href="{$vo.openid|reurl='topic'}">{$vo.subject}</a></h3></div>
+                <div class="am-u-sm-3">
+                    <img src="{$vo.thumb|removeImgDot}" alt="" width="100%">
+                </div>
+                <div class="am-u-sm-9 am-list-desc">
+                    {$vo.description}
+                    <div class="am-tags-group am-text-sm">
+                        <div class="am-info-bar">
+                            <a href="{$vo.uopenid|reurl='home'}" rel="nofollow">
+                                <img src="{$vo.avatar}" width="24" class="am-round" alt="">
+                                {$vo.username}</a>
+                            <span class="am-icon-clock-o"> {$vo.dateline|get_friendly_time}</span>
+                            <span class="am-icon-eye am-fr"> 浏览({$vo.views})</span>
+                            <span class="am-icon-commenting-o am-fr"> 回复({$vo.reply})</span>
+                        </div>
+                        {$vo.keywords|tags}
+                    </div>
+                </div>
+            </div>
+            {/empty}
+            {/volist}
+        </div>
+
+        <!--//end am-u-sm-9-->
+    </div>
+    <div class="am-u-sm-3 am-padding-left-0">
+        <ul class="am-list am-list-border am-list-sub-channel">
+            {volist name="sub_channel" id="vo"}
+            <li {eq name="vo.openid" value="$openid" }class="am-active" {/eq}>
+            <a href="{$vo.openid|reurl='category'}">{$vo.title} <span
+                    class="am-badge am-fr am-round">{$vo.counts}</span></a>
+            </li>
+            {/volist}
+        </ul>
+    </div>
+</div>
+{/block}

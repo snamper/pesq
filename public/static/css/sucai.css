@@ -1,0 +1,35 @@
+body{
+    background-color: #f1f2f3;
+}
+.am-topbar {
+    min-height: 35px;
+    height: 35px;
+    margin-bottom: 0;
+    border-bottom: none;
+}
+.am-header {
+    padding: 1rem 0;
+    min-height: 80px;
+    background-color: #fff;
+}
+.am-nav-bar{
+    background-color: #fff;
+}
+.am-header .am-nav>li>a {
+    color: #666;
+}
+.am-header .am-nav>li>a:hover,
+.am-header .am-nav>li>a:focus{
+    background-color: transparent;
+    color: #ff6c00;
+    transition-duration: 500ms;
+}
+.am-header-search {
+    position: relative;
+    padding-top: 1rem;
+}
+.am-header-search .am-btn {
+    position: absolute;
+    right:0;
+    top:1rem;
+}

@@ -1,0 +1,37 @@
+{extend name="common/index"}
+{block name="title"}{$cateInfo.title} - {/block}
+{block name="css"}
+{block name="content"}
+    <div class="weui-flex weui-widget-category-btn">
+        {volist name="category" id="vo"}
+        <div class="weui-flex__item">
+            <a href="?openid={$vo.openid}" class="weui-btn {eq name="openid" value="$vo.openid"}weui-btn_primary{else/}weui-bt-default{/eq}">{$vo.title}</a>
+        </div>
+
+        {/volist}
+    </div>
+    <!--end tabs and start goods list-->
+<div class="weui-panel weui-panel_access">
+    <div class="weui-panel__hd">商品列表</div>
+    <div class="weui-panel__bd">
+        {volist name="goodslist" id="vo"}
+        <a href="{:url('goods')}?openid={$vo.openid}" class="weui-media-box weui-media-box_appmsg">
+            <div class="weui-media-box__hd">
+                <img class="weui-media-box__thumb" src="{$vo.thumb|exploThumbFirst}" alt="{$vo.subject}">
+            </div>
+            <div class="weui-media-box__bd">
+                <h4 class="weui-media-box__title">{$vo.subject}</h4>
+                <p class="weui-media-box__desc"><span class="weui-text-red weui-text-lg">￥{$vo.price}</span></p>
+                <div class="weui-icon__incart"></div>
+            </div>
+        </a>
+        {/volist}
+        {empty name="goodslist"}
+        <div class="weui-padding weui-text-gray">
+            木有找到任何属于该分类的商品，请看看其他的吧！
+        </div>
+        {/empty}
+    </div>
+</div>
+{$goodslist->render()}
+{/block}

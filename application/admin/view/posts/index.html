@@ -1,0 +1,48 @@
+{extend name="base/index"/}
+{block name="css"}{:editorCSS()}{/block}
+{block name="content"}
+<form action="{:url('article')}" method="POST" role="form" class="am-form am-text-sm" id="article">
+    <div class="am-g">
+        <div class="am-u-sm-10 am-padding-left-0">
+                <div class="am-form-group">
+                    <label for="subject">文章标题</label>
+                    <input type="text" name="subject" id="subject" class="am-input-sm" placeholder="输入你的姓名">
+                </div>
+                <div class="am-form-group">
+                    <label for="message">文章正文</label>
+                    {:editorTextarea('message',300)}
+                </div>
+
+        </div>
+        <div class="am-u-sm-2 am-padding-0">
+            <div class="am-form-group">
+                <label for="catid">选择栏目</label>
+                <select name="catid" id="catid" class="am-input-sm">
+                    {volist name="channel" id="vo"}
+                        <option value="{$vo.id}">{eq name="vo.level" value="2"}&nbsp;&nbsp;|--{/eq} {$vo.title}</option>
+                    {/volist}
+                </select>
+            </div>
+            <div class="am-form-group">
+                <label for="thumb">缩略图</label>
+                {:puploader_template()}
+            </div>
+            <div class="am-form-group">
+                <label for="dateline">发布时间</label>
+                <input type="datetime-local" class="am-input-sm" name="dateline" placeholder="输入文章发布时间">
+            </div>
+            <div class="am-form-group">
+                <label for="views">初始浏览数</label>
+                <input type="number" class="am-input-sm" name="views" value="0">
+            </div>
+            <div class="am-form-group">
+                <button type="button" data-ajax-submit="#article" class="am-btn am-btn-block am-btn-primary am-radius am-icon-check"> 立即发布</button>
+            </div>
+        </div>
+    </div>
+</form>
+{/block}
+{block name="js"}
+{:editorJS()}
+{:puploader(false)}
+{/block}

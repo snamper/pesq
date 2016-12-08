@@ -1,0 +1,132 @@
+{extend name="common/index"/}
+{block name="title"}{$article.subject} - {$channel.title} - {/block}
+{block name="seo"}
+<meta name="keywords" content="{$article.keywords}">
+<meta name="description" content="{$article.description}">
+{/block}
+{block name="content"}
+<ol class="am-breadcrumb am-breadcrumb-slash">
+    <li><a href="/" class="am-icon-home"> 首页</a></li>
+    {volist name="breadcrumb" id="vo"}
+    {eq name="vo.id" value="$channel.id"}
+    <li>{$vo.title}</li>
+    {else/}
+    <li><a href="{$vo.openid|reurl='category'}">{$vo.title}</a></li>
+    {/eq}
+    {/volist}
+</ol>
+<div class="am-g">
+    <div class="am-u-sm-9">
+        <article class="am-article">
+            <div class="am-article-hd">
+                <h1 class="am-article-title am-border-bottom am-padding-bottom-sm">
+                    <span class="am-icon-file-text-o am-text-note"></span> {$article.subject}
+                    <small class="am-text-note am-text-normal am-text-default">[ {$channel.title} ]</small>
+                </h1>
+                <div class="am-text-sm am-text-note am-margin-bottom am-border-bottom am-padding-bottom-sm">
+                    <div class="am-fr">
+                        <a href="javascript:void(0);" class="am-icon-thumbs-o-up am-margin-right am-text-note"> 赞(0)</a>
+                        <a href="javascript:void(0);" class="am-icon-thumbs-o-down am-text-note"> 踩(0)</a>
+                    </div>
+                    <a href="{$author.openid|reurl='home'}" class="am-icon-user am-text-note am-margin-right"
+                       rel="nofollow"> {$author.username}</a>
+                    <span class="am-icon-clock-o am-margin-right"> {$article.dateline|get_friendly_time}</span>
+                    <span class="am-icon-eye am-margin-right"> {$article.views}次浏览</span>
+                    <span class="am-icon-commenting-o"> {$article.reply}条回复</span>
+                </div>
+            </div>
+
+            <div class="am-article-bd">
+                {$article.message|htmlspecialchars_decode}
+            </div>
+        </article>
+
+        <!--//end article widget-->
+
+        <div id="reples" class="am-widget-reples">
+            <div class="am-widget-reples-form am-margin-bottom">
+                <form action="{:url('index/article/create_reples')}?spm={:spm()}" method="POST" role="form"
+                      class="am-form" id="reples-form">
+                    <input type="hidden" name="aid" value="{$article.id}">
+                    <input type="hidden" name="pid" value="0">
+                    <div class="am-form-group">
+                        <textarea name="message" id="message" cols="30" rows="4" class="am-radius am-input-sm"
+                                  placeholder="说点什么吧！"></textarea>
+                    </div>
+                    <button type="button" id="create-new-reples" onclick="create_new_reples();"
+                            class="am-btn am-btn-primary am-radius am-btn-sm am-icon-check"> 评论
+                    </button>
+                </form>
+            </div>
+            <div class="am-border-bottom am-margin-bottom-sm am-padding-bottom-xs"><span
+                    class="am-icon-commenting-o"></span> 评论列表
+            </div>
+            <div id="am-comments"></div>
+        </div>
+    </div>
+    <div class="am-u-sm-3 am-padding-left-xs">
+        <section class="am-panel am-panel-default am-radius">
+            <div class="am-panel-bd am-padding-sm">
+                <div class="am-cf am-margin-bottom-sm">
+                    <a href="{$author.openid|reurl='home'}" class="am-fl am-margin-right-sm" rel="nofollow">
+                        <img src="{$author.avatar.0}" class="am-radius" width="45" alt="{$author.username}">
+                    </a>
+                    <a href="{$author.openid|reurl='home'}" rel="nofollow">{$author.username}</a>
+                    <div class="am-text-xs am-text-note">注册时间：{$author.reg_time|date='Y-m-d',###}</div>
+                    <div class="am-text-xs am-text-note">最后登录：{$author.last_login_time|get_friendly_time}</div>
+                </div>
+                <ul class="am-avg-sm-4 am-text-xs am-text-note am-text-center am-border-bottom-dotted am-border-top-dotted">
+                    <li class="am-padding-top-xs am-padding-bottom-xs">
+                        主题<br/><span class="am-text-danger">120</span>
+                    </li>
+                    <li class="am-padding-top-xs am-padding-bottom-xs">
+                        回复<br/><span class="am-text-danger">41</span>
+                    </li>
+                    <li class="am-padding-top-xs am-padding-bottom-xs">
+                        金币<br/><span class="am-text-danger">56</span>
+                    </li>
+                    <li class="am-padding-top-xs am-padding-bottom-xs">
+                        积分<br/><span class="am-text-danger">630</span>
+                    </li>
+                </ul>
+                <ul class="am-avg-sm-2 am-padding-top-sm">
+                    <li><a href="javascript:followUser({$author.uid});" class="am-btn am-btn-primary am-btn-xs am-radius am-icon-plus" rel="nofollow"> 关注</a></li>
+                    <li><a href="{$author.openid|reurl='home'}" target="_blank" class="am-btn am-btn-success am-btn-xs am-radius am-icon-home" rel="nofollow"> 他的主页</a></li>
+                </ul>
+            </div>
+        </section>
+        <div class="am-panel am-panel-default am-radius">
+            <header class="am-panel-hd">
+                <h3 class="am-panel-title am-text-normal">热门帖子</h3>
+            </header>
+            <ul class="am-list am-text-sm">
+                {volist name="hot_list" id="vo"}
+                <li>
+                    <a href="{$vo.openid|reurl='topic'}" class="am-text-truncate" title="{$vo.subject}">
+                        <span class="am-icon-file-text-o"></span> {$vo.subject}
+                    </a>
+                </li>
+                {/volist}
+            </ul>
+        </div>
+
+    </div>
+</div>
+{/block}
+{block name="js"}
+<script type="text/javascript">
+    get_reples_lists({$article.id
+    })
+    ;
+    function get_reples_lists(aid) {
+        var target = $('#am-comments');
+        $.get("{:url('article/reples')}", {aid: aid}, function (callback) {
+            if (callback) {
+                target.html(callback);
+            } else {
+                target.html('没有找到任何评论，沙发还在！');
+            }
+        })
+    }
+</script>
+{/block}

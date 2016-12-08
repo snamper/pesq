@@ -1,0 +1,79 @@
+{extend name="common/index"}
+{block name="title"}{$goods.subject} - 商品详情页 - {/block}
+{block name="css"}
+<link rel="stylesheet" href="__c__/amazeui.swiper.min.css{:vcs()}">
+{/block}
+{block name="content"}
+<div class="swiper-container" id="index-slider">
+    <!-- Additional required wrapper -->
+    <div class="swiper-wrapper">
+        <!-- Slides -->
+        {volist name="goods.thumb" id="vo"}
+        <div class="swiper-slide"><img src="{$vo}" alt="" width="100%"></div>
+        {/volist}
+    </div>
+</div>
+<div class="weui-cells weui-margin-top-0 weui-padding">
+    <div class="weui-cell__hd weui-text-xl">{$goods.subject}</div>
+    <div class="weui-cell__bd weui-text-red weui-text-lg " id="price-area">￥{$goods.price}元</div>
+</div>
+<form action="{:url('pay/index')}" method="post" id="goods-form">
+    <input type="hidden" name="goods_id" value="{$goods.id}">
+    <input type="hidden" name="price" value="" id="price">
+    <div class="weui-cells">
+        <input type="hidden" name="spec" id="spec" value="">
+        {volist name="goods.spec" id="vo"}
+        <div class="weui-cells__title">{$key}</div>
+        <div class="weui-cell">
+            <div class="weui-cell__bd" data-widget-spec>
+                {volist name="vo" id="v"}
+                <span class="weui-btn weui-btn_mini weui-btn_default weui-margin-0" data-spec-id="{$v.id}" data-price="{$v.price}">{$v.name}</span>
+                {/volist}
+            </div>
+        </div>
+        {/volist}
+        <div class="weui-cells__title">数量</div>
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <div class="weui-widget-num">
+                    <span class="weui-widget-num-ctr weui-left" onclick="addLessNum('less')">-</span>
+                    <input name="num" type="number" id="num" class="weui-widget-num-input" value="1"/>
+                    <span class="weui-widget-num-ctr weui-right" onclick="addLessNum('add')">+</span>
+                </div>
+            </div>
+        </div>
+        <div class="weui-cells__title">查看图文详情</div>
+        <div class="weui-cell">
+            <article class="weui-article weui-padding-0">
+                <section>
+                    {$goods.message|htmlspecialchars_decode}
+                </section>
+            </article>
+        </div>
+    </div>
+</form>
+{/block}
+
+{block name="footer"}
+<div class="weui-buy-bar weui-cells">
+    <div class="weui-flex">
+        <div class="weui-flex__item weui-text-center weui-btn__cart" onclick="tourl('{:url('index/shopcart')}')">
+            <div class="weui-widget-shopcart">
+                <img src="__i__/mshop/cart.svg" width="18" height="18">
+                <span class="weui-text-xs weui-text-gray">购物车</span>
+                <span class="weui-widget-shopcart-badge">1</span>
+            </div>
+        </div>
+        <div class="weui-flex__item">
+            <div class="weui-btn weui-btn_warn" onclick="addShopCart('#goods-form')">加入购物车</div>
+        </div>
+        <div class="weui-flex__item">
+            <div class="weui-btn weui-btn_primary" onclick="toBuyGoods('#goods-form')">立即购买</div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="js"}
+<script src="__j__/amazeui.swiper.min.js{:vcs()}"></script>
+<script type="text/javascript">$(function(){$('#index-slider').swiper();}); getShopCartCount();</script>
+{/block}
