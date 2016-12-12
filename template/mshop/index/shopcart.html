@@ -10,47 +10,56 @@
             <img src="__i__/mshop/cart.svg" alt="" width="28"> 购物车
         </div>
     </div>
-    <div class="weui-cells weui-cells_checkbox">
-        <label class="weui-cell weui-check__label" for="s11">
-            <div class="weui-cell__hd">
-                <input type="checkbox" class="weui-check" name="checkbox1" id="s11" checked="checked">
-                <i class="weui-icon-checked"></i>
-            </div>
-            <div class="weui-cell__bd">
-                <p>standard is dealt for u.</p>
-            </div>
-        </label>
-        <label class="weui-cell weui-check__label" for="s12">
-            <div class="weui-cell__hd">
-                <input type="checkbox" name="checkbox1" class="weui-check" id="s12">
-                <i class="weui-icon-checked"></i>
-            </div>
-            <div class="weui-cell__bd">
-                <p>standard is dealicient for u.</p>
-            </div>
-        </label>
-    </div>
-    <div class="weui-shopcart-bar weui-cells">
-        <div class="weui-flex">
-            <div class="weui-flex__item"></div>
-            <div class="weui-flex__item"></div>
-            <div class="weui-flex__item">
-                <div class="weui-btn weui-btn_warn weui-radius-0">删除</div>
+<form  name="shop-cart_form">
+<div class="weui-cells weui-cells_checkbox">
+    {volist name="list" id="vo"}
+    <label class="weui-cell weui-check__label" for="s{$vo.id}">
+        <input type="hidden" name="num" value="{$vo.num}">
+        <input type="hidden" name="price" value="{$vo.price}">
+        <div class="weui-cell__hd">
+            <input type="checkbox" class="weui-check" value="{$vo.id}" name="id" id="s{$vo.id}" checked="checked">
+            <i class="weui-icon-checked"></i>
+        </div>
+        <div class="weui-cell__bd">
+            <div class="weui-panel weui-panel_access weui-panel_shop-cart">
+                <div class="weui-panel__bd">
+                    <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
+                        <div class="weui-media-box__hd">
+                            <img class="weui-media-box__thumb" src="{$vo.thumb|exploThumbFirst}" alt="">
+                        </div>
+                        <div class="weui-media-box__bd">
+                            <h4 class="weui-media-box__title">{$vo.subject}</h4>
+                            <p class="weui-media-box__desc"><span class="weui-text-red">￥{$vo.price}</span> 规格：{$vo.name} 数量：{$vo.num}</p>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
+    </label>
+    {/volist}
+</div>
+</form>
+<div class="weui-shopcart-bar weui-cells">
+    <div class="weui-flex">
+        <div class="weui-flex__item"></div>
+        <div class="weui-flex__item"></div>
+        <div class="weui-flex__item">
+            <div class="weui-btn weui-btn_warn weui-radius-0">删除</div>
+        </div>
     </div>
+</div>
 {/block}
 {block name="footer"}
 <div class="weui-buy-bar weui-cells">
     <div class="weui-flex">
-        <div class="weui-flex__item weui-buy-bar_home">
-
+        <div class="weui-flex__item weui-buy-bar_count">
+            合计：<span class="weui-text-red">￥{$fee}</span>
         </div>
         <div class="weui-flex__item">
 
         </div>
         <div class="weui-flex__item">
-            <div class="weui-btn weui-btn_primary">立即结算</div>
+            <div class="weui-btn weui-btn_primary" onclick="toPay()">立即结算</div>
         </div>
     </div>
 </div>
@@ -60,5 +69,13 @@
     function showCartEdiorTool(){
         $('.weui-shopcart-bar').toggle();
     }
+    function toPay(){
+        var formDataSerialize = $('[name="shop-cart_form"]').serialize();
+        console.log(formDataSerialize);
+    }
+    $('[name="id"]').change(function(){
+        var formDataSerialize = $('[name="shop-cart_form"]').serializeArray();
+        console.log(formDataSerialize);
+    })
 </script>
 {/block}

@@ -2,6 +2,7 @@
 namespace app\mshop\controller;
 
 use app\common\model\Api;
+use app\common\model\ShopCart;
 use com\wechat\Jssdk;
 use think\Controller;
 
@@ -69,8 +70,20 @@ class Index extends Controller
         return $this->fetch();
     }
 
+    /**
+     * 购物车
+     * @return mixed
+     */
     public function shopcart()
     {
+        $data = ShopCart::shopCart();
+        $total_fee = 0;
+        foreach ($data as $item=>$value){
+            $total_fee  = $total_fee + $value['price']*$value['num'];
+        }
+        $this->assign('list',$data);
+        $this->assign('fee',$total_fee);
+
         return $this->fetch();
     }
 
@@ -79,9 +92,9 @@ class Index extends Controller
         $data = input('post.');
         $user = get_uerinfo();
         if(!$user){
-            $this->result('please login',500,'请您选登录授权');
+            $this->result('please login',403,'请您选登录授权,正在为您转跳');
         }
-        $checkSHopCart = db('shop_cart')->where(['openid'=>$user['openid'],'goods_id'=>$data['goods_id']])->find();
+        $checkSHopCart = db('shop_cart')->where(['openid'=>$user['openid'],'goods_id'=>$data['goods_id'],'spec_id'=>$data['spec']])->find();
         if($checkSHopCart){
             $this->result('rept',500,'商品已经加入购物车了');
         }else{

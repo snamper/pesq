@@ -303,3 +303,11 @@ body#mshop{
     height: 46px;
     z-index: 668;
 }
+.weui-panel_shop-cart:before,
+.weui-panel_shop-cart:after{
+    border:none;
+}
+.weui-buy-bar_count {
+    line-height: 46px;
+    padding-left: 5px;
+}

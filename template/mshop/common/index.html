@@ -18,9 +18,10 @@
             <img src="__i__/mshop/home.svg" alt="" class="weui-tabbar__icon">
             <p class="weui-tabbar__label">主页</p>
         </a>
-        <a href="{:url('index/shopcart')}" class="weui-tabbar__item {eq name="controller" value="index"}{eq name="action" value="shopcart"}weui-bar__item_on{/eq}{/eq}">
+        <a href="{:url('index/shopcart')}" style="position: relative;" class="weui-tabbar__item {eq name="controller" value="index"}{eq name="action" value="shopcart"}weui-bar__item_on{/eq}{/eq}">
             <img src="__i__/mshop/cart.svg" alt="" class="weui-tabbar__icon">
             <p class="weui-tabbar__label">购物车</p>
+            <span class="weui-widget-shopcart-badge" style="right: 30%; top: 5px;">1</span>
         </a>
         <a href="{:url('user/index')}" class="weui-tabbar__item {eq name="controller" value="user"}weui-bar__item_on{/eq}">
             <img src="__i__/mshop/user.svg" alt="" class="weui-tabbar__icon">
