@@ -1,6 +1,7 @@
 <?php
 namespace app\mshop\controller;
-
+vendor('wxpay.lib.WxPayApi');
+vendor('wxpay.JsApiPay');
 class Pay extends Index
 {
     public function _initialize()
@@ -15,8 +16,6 @@ class Pay extends Index
      * @return mixed
      */
     public function index(){
-        vendor('wxpay.lib.WxPayApi');
-        vendor('wxpay.JsApiPay');
         $tools = new \JsApiPay();
         $openId = $tools->GetOpenid();
 
@@ -66,6 +65,24 @@ class Pay extends Index
             $this->result('error',500,'订单创建失败！');
         }
 
+    }
+    public function create_many_order(){
+        $data = input('post.');
+        $user = get_uerinfo();
+        print_r($data);
+    }
+    public function calator_cart(){
+        $data = input('get.');
+        foreach ($data as $item=>$value){
+            if(!isset($value['id'])){
+                unset($data[$item]);
+            }
+        }
+        $total_fee = 0;
+        foreach ($data as $item=>$value){
+            $total_fee  = $total_fee + $value['price']*$value['num'];
+        }
+        return $total_fee;
     }
     public function notify(){
         echo 'SUCCESS';

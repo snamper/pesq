@@ -11,15 +11,15 @@
         </div>
     </div>
 <form  name="shop-cart_form">
-<div class="weui-cells weui-cells_checkbox">
+
     {volist name="list" id="vo"}
-    <label class="weui-cell weui-check__label" for="s{$vo.id}">
-        <input type="hidden" name="num" value="{$vo.num}">
-        <input type="hidden" name="price" value="{$vo.price}">
-        <div class="weui-cell__hd">
-            <input type="checkbox" class="weui-check" value="{$vo.id}" name="id" id="s{$vo.id}" checked="checked">
-            <i class="weui-icon-checked"></i>
-        </div>
+    <div class="weui-cells">
+    <div class="weui-cell weui-cells_checkbox">
+        <input type="hidden" name="{$vo.id}[price]" value="{$vo.price}">
+        <label class="weui-check__label" for="s{$vo.id}">
+            <input type="checkbox" class="weui-check" value="{$vo.id}" name="{$vo.id}[id]" id="s{$vo.id}" checked="checked">
+            <i class="weui-icon-checked" onclick="selectGoods()"></i>
+        </label>
         <div class="weui-cell__bd">
             <div class="weui-panel weui-panel_access weui-panel_shop-cart">
                 <div class="weui-panel__bd">
@@ -29,15 +29,23 @@
                         </div>
                         <div class="weui-media-box__bd">
                             <h4 class="weui-media-box__title">{$vo.subject}</h4>
-                            <p class="weui-media-box__desc"><span class="weui-text-red">￥{$vo.price}</span> 规格：{$vo.name} 数量：{$vo.num}</p>
+                            <p class="weui-media-box__desc"><span class="weui-text-red">￥{$vo.price}</span> 规格：{$vo.name}</p>
                         </div>
                     </a>
                 </div>
             </div>
         </div>
-    </label>
+    </div>
+    <div class="weui-widget-cart-num">
+        <div class="weui-controls controls-left" data-widget-num="{target:'#num-{$vo.id}',act:'less'}">-</div>
+        <div class="weui-controls-input">
+            <input type="text" class="weui-input" id="num-{$vo.id}" name="{$vo.id}[num]" value="{$vo.num}">
+        </div>
+        <div class="weui-controls controls-right" data-widget-num="{target:'#num-{$vo.id}',act:'add'}">+</div>
+    </div>
+    </div>
     {/volist}
-</div>
+
 </form>
 <div class="weui-shopcart-bar weui-cells">
     <div class="weui-flex">
@@ -53,7 +61,7 @@
 <div class="weui-buy-bar weui-cells">
     <div class="weui-flex">
         <div class="weui-flex__item weui-buy-bar_count">
-            合计：<span class="weui-text-red">￥{$fee}</span>
+            合计：<span class="weui-text-red" id="total-fee">￥{$fee}</span>
         </div>
         <div class="weui-flex__item">
 
@@ -66,16 +74,54 @@
 {/block}
 {block name="js"}
 <script type="text/javascript">
+    var defaultFee = "{$fee}"; //初始购物车列表价格
+    setTotalFee(defaultFee);
     function showCartEdiorTool(){
         $('.weui-shopcart-bar').toggle();
     }
     function toPay(){
         var formDataSerialize = $('[name="shop-cart_form"]').serialize();
-        console.log(formDataSerialize);
+        $.ajax({
+            url: "{:url('pay/create_many_order')}",
+            type: 'Post',
+            data : formDataSerialize,
+            success:function(res){
+
+            },
+            error:function(){
+                showAlert(500,'内部服务器错误，请联系客服');
+            }
+        });
     }
-    $('[name="id"]').change(function(){
-        var formDataSerialize = $('[name="shop-cart_form"]').serializeArray();
-        console.log(formDataSerialize);
+    function selectGoods(){
+       setTimeout("showTotalFee()",100);
+    }
+    function showTotalFee() {
+        var formDataSerialize = $('[name="shop-cart_form"]').serialize();
+        $.get("{:url('pay/calator_cart')}",formDataSerialize,function(res){
+            if(res){
+                setTotalFee(res);
+            }else {
+                setTotalFee(0)
+            }
+        })
+    }
+    function setTotalFee(fe){
+        document.getElementById('total-fee').innerHTML='￥'+fe;
+    }
+    $(document).on('click','[data-widget-num]',function(){
+        var json = $(this).data('widget-num'),
+        object = json_to_obj(json),
+        _idNum = $(object.target),
+        num = _idNum.val();
+        if(object.act ==='add'){
+            _idNum.val(Number(num)+1);
+        }else {
+            if(num > 1){
+                _idNum.val(Number(num)-1);
+            }
+        }
+        setTimeout("showTotalFee()",100);
     })
 </script>
 {/block}

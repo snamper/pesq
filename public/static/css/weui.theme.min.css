@@ -311,3 +311,62 @@ body#mshop{
     line-height: 46px;
     padding-left: 5px;
 }
+.weui-widget-cart-num {
+    width: 100px;
+    position: absolute;
+    right:5px;
+    bottom: 5px;
+    z-index: 66;
+    height: 30px;
+    background-color: #fff;
+}
+.weui-widget-cart-num-bar{
+    height: 30px;
+    position: absolute;
+    right:5px;
+    bottom: 5px;
+}
+.weui-widget-cart-num-bar:before,
+.weui-widget-cart-num-bar:after,
+.weui-widget-cart-num:after,
+.weui-widget-cart-num:before{
+    content: "";
+    display: table;
+}
+.weui-widget-cart-num:after{
+    content: " ";
+    width: 200%;
+    height: 200%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 1px solid #ddd;
+    -webkit-transform: scale(0.5);
+    transform: scale(0.5);
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    box-sizing: border-box;
+    border-radius: 2px;
+}
+.weui-widget-cart-num>div{
+    float: left;
+}
+.weui-widget-cart-num .weui-controls{
+    width: 30px;
+    text-align: center;
+    background-color: #f2f2f2;
+    height: 30px;
+    line-height: 30px;
+    position: relative;
+    z-index: 6666;
+}
+.weui-widget-cart-num .weui-controls-input{
+    width: 40px;
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+}
+.weui-controls-input>.weui-input{
+    text-align: center;
+}
