@@ -1,5 +1,16 @@
 {extend name="common/index"/}
 {block name="title"}订单列表 - {/block}
 {block name="content"}
+<div class="weui-tab">
+    <div class="weui-navbar order-status">
+        <div class="weui-navbar__item weui-bar__item_on" data-status="1">全部</div>
+        <div class="weui-navbar__item" data-status="1">待付款</div>
+        <div class="weui-navbar__item" data-status="2">待发货</div>
+        <div class="weui-navbar__item" data-status="3">配送中</div>
+        <div class="weui-navbar__item" data-status="4">已完成</div>
+    </div>
+    <div class="weui-tab__panel">
 
+    </div>
+</div>
 {/block}
