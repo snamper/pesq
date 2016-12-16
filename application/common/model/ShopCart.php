@@ -25,7 +25,7 @@ class ShopCart extends Model {
             ->alias('sc')
             ->join('shop s','sc.goods_id = s.id','LEFT')
             ->join('shop_goods_spec ss','sc.spec_id = ss.id','LEFT')
-            ->field('sc.id,sc.price,s.subject,ss.name,sc.num,s.thumb')
+            ->field('sc.id,sc.price,s.subject,ss.name,sc.num,s.thumb,sc.spec_id,s.id goods_id')
             ->where('sc.openid',$user['openid'])
             ->order('sc.id','desc')
             ->select();

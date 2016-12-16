@@ -12,7 +12,7 @@
 return [
     'category/:openid' => 'index/lists/index',
     'topic/:openid' => 'index/article/index',
-    'goods/:openid' => 'index/goods/index',
+    'goods/:openid' => 'mshop/index/goods',
     'product/:openid' => 'index/product/index',
     'shop/:openid' => 'index/shop/index',
     'home/:openid' => 'user/home/index',

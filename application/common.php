@@ -287,3 +287,6 @@ function specArray($arr){
     }
     return $result;
 }
+function goodsUrl($openid){
+    return 'http://' . request()->host() . '/goods/'.$openid.'.html';
+}

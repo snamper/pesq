@@ -14,7 +14,7 @@ require_once "lib/WxPayApi.php";
 class JsApiPay
 {
 	/**
-	 * 
+	 *
 	 * 网页授权接口微信服务器返回的数据，返回样例如下
 	 * {
 	 *  "access_token":"ACCESS_TOKEN",
@@ -30,13 +30,13 @@ class JsApiPay
 	 */
 	public $data = null;
     private  $curl_timeout =120;
-	
+
 	/**
-	 * 
+	 *
 	 * 通过跳转获取用户的openid，跳转流程如下：
 	 * 1、设置自己需要调回的url及其其他参数，跳转到微信服务器https://open.weixin.qq.com/connect/oauth2/authorize
 	 * 2、微信服务处理完成之后会跳转回用户redirect_uri地址，此时会带上一些参数，如：code
-	 * 
+	 *
 	 * @return 用户的openid
 	 */
 	public function GetOpenid()
@@ -44,7 +44,7 @@ class JsApiPay
 		//通过code获得openid
 		if (!isset($_GET['code'])){
 			//触发微信返回code码
-			$baseUrl = urlencode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].$_SERVER['QUERY_STRING']);
+			$baseUrl = urlencode('http://'.request()->host().'/mshop/pay/index.html');
 			$url = $this->__CreateOauthUrlForCode($baseUrl);
 			Header("Location: $url");
 			exit();
@@ -55,13 +55,13 @@ class JsApiPay
 			return $openid;
 		}
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * 获取jsapi支付的参数
 	 * @param array $UnifiedOrderResult 统一支付接口返回的数据
 	 * @throws WxPayException
-	 * 
+	 *
 	 * @return json数据，可直接填入js函数作为参数
 	 */
 	public function GetJsApiParameters($UnifiedOrderResult)
@@ -83,12 +83,12 @@ class JsApiPay
 		$parameters = json_encode($jsapi->GetValues());
 		return $parameters;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * 通过code从工作平台获取openid机器access_token
 	 * @param string $code 微信跳转回来带上的code
-	 * 
+	 *
 	 * @return openid
 	 */
 	public function GetOpenidFromMp($code)
@@ -103,7 +103,7 @@ class JsApiPay
 		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST,FALSE);
 		curl_setopt($ch, CURLOPT_HEADER, FALSE);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-		if(WxPayConfig::CURL_PROXY_HOST != "0.0.0.0" 
+		if(WxPayConfig::CURL_PROXY_HOST != "0.0.0.0"
 			&& WxPayConfig::CURL_PROXY_PORT != 0){
 			curl_setopt($ch,CURLOPT_PROXY, WxPayConfig::CURL_PROXY_HOST);
 			curl_setopt($ch,CURLOPT_PROXYPORT, WxPayConfig::CURL_PROXY_PORT);
@@ -117,12 +117,12 @@ class JsApiPay
 		$openid = $data['openid'];
 		return $openid;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * 拼接签名字符串
 	 * @param array $urlObj
-	 * 
+	 *
 	 * @return 返回已经拼接好的字符串
 	 */
 	private function ToUrlParams($urlObj)
@@ -134,19 +134,19 @@ class JsApiPay
 				$buff .= $k . "=" . $v . "&";
 			}
 		}
-		
+
 		$buff = trim($buff, "&");
 		return $buff;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * 获取地址js参数
-	 * 
+	 *
 	 * @return 获取共享收货地址js函数需要的参数，json格式可以直接做参数使用
 	 */
 	public function GetEditAddressParameters()
-	{	
+	{
 		$getData = $this->data;
 		$data = array();
 		$data["appid"] = WxPayConfig::APPID;
@@ -158,7 +158,7 @@ class JsApiPay
 		ksort($data);
 		$params = $this->ToUrlParams($data);
 		$addrSign = sha1($params);
-		
+
 		$afterData = array(
 			"addrSign" => $addrSign,
 			"signType" => "sha1",
@@ -170,12 +170,12 @@ class JsApiPay
 		$parameters = json_encode($afterData);
 		return $parameters;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * 构造获取code的url连接
 	 * @param string $redirectUrl 微信服务器回跳的url，需要url编码
-	 * 
+	 *
 	 * @return 返回构造好的url
 	 */
 	private function __CreateOauthUrlForCode($redirectUrl)
@@ -188,12 +188,12 @@ class JsApiPay
 		$bizString = $this->ToUrlParams($urlObj);
 		return "https://open.weixin.qq.com/connect/oauth2/authorize?".$bizString;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * 构造获取open和access_toke的url地址
 	 * @param string $code，微信跳转带回的code
-	 * 
+	 *
 	 * @return 请求的url
 	 */
 	private function __CreateOauthUrlForOpenid($code)

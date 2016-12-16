@@ -370,3 +370,10 @@ body#mshop{
 .weui-controls-input>.weui-input{
     text-align: center;
 }
+.order-status .weui-bar__item_on {
+    background-color: #0bb20c;
+    color: #fff;
+}
+.order-status .weui-bar__item_on>a {
+    color: #fff;
+}

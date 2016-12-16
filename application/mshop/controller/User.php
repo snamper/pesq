@@ -2,6 +2,7 @@
 namespace app\mshop\controller;
 
 use app\common\controller\Weixin;
+use app\common\model\ShopOrder;
 
 class User extends Index
 {
@@ -25,7 +26,15 @@ class User extends Index
         $weixin->authorize();
     }
 
+    /**
+     * 订单列表
+     * @return mixed
+     */
     public function order(){
+        $status = input('get.status','all');
+        $list = ShopOrder::datalist($status);
+        $this->assign('list',$list);
+        $this->assign('status',$status);
         return $this->fetch();
     }
 

@@ -16,6 +16,8 @@
     <div class="weui-cells">
     <div class="weui-cell weui-cells_checkbox">
         <input type="hidden" name="{$vo.id}[price]" value="{$vo.price}">
+        <input type="hidden" name="{$vo.id}[spec]" value="{$vo.spec_id}">
+        <input type="hidden" name="{$vo.id}[goods_id]" value="{$vo.goods_id}">
         <label class="weui-check__label" for="s{$vo.id}">
             <input type="checkbox" class="weui-check" value="{$vo.id}" name="{$vo.id}[id]" id="s{$vo.id}" checked="checked">
             <i class="weui-icon-checked" onclick="selectGoods()"></i>
@@ -79,6 +81,9 @@
     function showCartEdiorTool(){
         $('.weui-shopcart-bar').toggle();
     }
+    /**
+     * 结算
+     * */
     function toPay(){
         var formDataSerialize = $('[name="shop-cart_form"]').serialize();
         $.ajax({
@@ -86,18 +91,30 @@
             type: 'Post',
             data : formDataSerialize,
             success:function(res){
-
+                if(res.code == 200){
+                    window.location.href ='/mshop/pay/index';
+                }else {
+                    showAlert(res.code,res.msg);
+                }
             },
             error:function(){
                 showAlert(500,'内部服务器错误，请联系客服');
             }
         });
     }
+    /**
+     * 商品选择
+     * */
     function selectGoods(){
        setTimeout("showTotalFee()",100);
     }
+
+    /**
+     * 计算金额价格
+     */
     function showTotalFee() {
         var formDataSerialize = $('[name="shop-cart_form"]').serialize();
+
         $.get("{:url('pay/calator_cart')}",formDataSerialize,function(res){
             if(res){
                 setTotalFee(res);
@@ -106,9 +123,16 @@
             }
         })
     }
+    /**
+     * 设置价格总计
+     * @param fe
+     */
     function setTotalFee(fe){
         document.getElementById('total-fee').innerHTML='￥'+fe;
     }
+    /**
+     * 数量加减
+     */
     $(document).on('click','[data-widget-num]',function(){
         var json = $(this).data('widget-num'),
         object = json_to_obj(json),

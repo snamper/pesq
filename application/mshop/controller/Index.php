@@ -119,7 +119,7 @@ class Index extends Controller
 
     public function goods()
     {
-        $openid = input('get.openid');
+        $openid = input('param.openid');
         Api::openidValidator($openid);
         $goods = db('shop')->where('openid',$openid)->find();
         $spec = db('shop_goods_spec')->where('openid',$openid)->select();
